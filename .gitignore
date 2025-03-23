@@ -30,11 +30,11 @@ lib64/
 .eggs/
 
 # 爬虫数据文件
-*.json
-*.csv
-*.xlsx
-*.xls
-*.log
+**/*.json
+**/*.csv
+**/*.xlsx
+**/*.xls
+**/*.log
 
 # IDE
 .idea/

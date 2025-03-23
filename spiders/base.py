@@ -184,13 +184,23 @@ class BaseSpider:
     def save_data(self) -> None:
         """保存数据到文件"""
         storage_config = self.config["STORAGE_CONFIG"]
+        
+        # 确保data目录存在
+        data_dir = "data"
+        if not os.path.exists(data_dir):
+            os.makedirs(data_dir)
+
+        # 构建完整的文件路径
+        json_file = os.path.join(data_dir, storage_config["json_file"])
+        csv_file = os.path.join(data_dir, storage_config["csv_file"])
+        excel_file = os.path.join(data_dir, storage_config["excel_file"])
 
         # 保存JSON
         try:
-            with open(storage_config["json_file"], "w", encoding="utf-8") as f:
+            with open(json_file, "w", encoding="utf-8") as f:
                 json.dump(self.data, f, ensure_ascii=False, indent=2)
             self.logger.info(
-                f"成功保存 {len(self.data)} 条数据到 {storage_config['json_file']}"
+                f"成功保存 {len(self.data)} 条数据到 {json_file}"
             )
         except Exception as e:
             self.logger.error(f"保存JSON文件时出错: {str(e)}")
@@ -201,8 +211,8 @@ class BaseSpider:
         # 保存CSV
         if storage_config["csv_enabled"]:
             try:
-                df.to_csv(storage_config["csv_file"], index=False, encoding="utf-8-sig")
-                self.logger.info(f"成功保存数据到 {storage_config['csv_file']}")
+                df.to_csv(csv_file, index=False, encoding="utf-8-sig")
+                self.logger.info(f"成功保存数据到 {csv_file}")
             except Exception as e:
                 self.logger.error(f"保存CSV文件时出错: {str(e)}")
 
@@ -210,7 +220,7 @@ class BaseSpider:
         if storage_config["excel_enabled"]:
             try:
                 with pd.ExcelWriter(
-                    storage_config["excel_file"], engine="openpyxl"
+                    excel_file, engine="openpyxl"
                 ) as writer:
                     df.to_excel(writer, index=False, sheet_name="数据")
                     worksheet = writer.sheets["数据"]
@@ -221,7 +231,7 @@ class BaseSpider:
                         worksheet.column_dimensions[chr(65 + idx)].width = (
                             max_length + 2
                         )
-                self.logger.info(f"成功保存数据到 {storage_config['excel_file']}")
+                self.logger.info(f"成功保存数据到 {excel_file}")
             except Exception as e:
                 self.logger.error(f"保存Excel文件时出错: {str(e)}")
 
