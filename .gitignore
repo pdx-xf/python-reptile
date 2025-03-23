@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+
+# 包管理
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+bin/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+.eggs/
+
+# 爬虫数据文件
+*.json
+*.csv
+*.xlsx
+*.xls
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+.vs/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 项目特定
+chromedriver
+chromedriver.exe
+geckodriver
+geckodriver.exe
+config.py
+*.bak
+*.tmp
+
+# 代理配置
+proxies.txt
+proxy_config.yaml
+
+# 测试
+.coverage
+htmlcov/
+.tox/
+.nox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/ 
