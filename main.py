@@ -9,34 +9,54 @@ from spiders.boss import BossSpider
 
 def load_config() -> Dict[str, Any]:
     """加载配置文件"""
+    # 检查通用配置文件
     if not os.path.exists("config.py"):
-        print("错误：配置文件 config.py 不存在！")
-        print("请复制 config_example.py 为 config.py 并根据需要修改配置。")
+        print("错误：通用配置文件 config.py 不存在！")
+        sys.exit(1)
+
+    # 检查项目特定配置文件
+    if not os.path.exists("boss_config.py"):
+        print("错误：BOSS直聘项目配置文件 boss_config.py 不存在！")
         sys.exit(1)
 
     try:
         import config
+        import boss_config
 
-        required_configs = [
-            "SEARCH_CONFIG",
+        # 检查通用配置
+        common_configs = [
             "SPIDER_CONFIG",
-            "STORAGE_CONFIG",
             "PROXY_CONFIG",
             "BROWSER_CONFIG",
             "LOG_CONFIG",
         ]
 
-        for config_name in required_configs:
-            if not hasattr(config, config_name):
-                raise ImportError(f"配置文件缺少必要的配置项：{config_name}")
+        # 检查项目特定配置
+        project_configs = [
+            "SEARCH_CONFIG",
+            "STORAGE_CONFIG",
+        ]
 
+        # 验证通用配置
+        for config_name in common_configs:
+            if not hasattr(config, config_name):
+                raise ImportError(f"通用配置文件缺少必要的配置项：{config_name}")
+
+        # 验证项目特定配置
+        for config_name in project_configs:
+            if not hasattr(boss_config, config_name):
+                raise ImportError(f"项目配置文件缺少必要的配置项：{config_name}")
+
+        # 合并配置
         return {
-            "SEARCH_CONFIG": config.SEARCH_CONFIG,
+            # 通用配置
             "SPIDER_CONFIG": config.SPIDER_CONFIG,
-            "STORAGE_CONFIG": config.STORAGE_CONFIG,
             "PROXY_CONFIG": config.PROXY_CONFIG,
             "BROWSER_CONFIG": config.BROWSER_CONFIG,
             "LOG_CONFIG": config.LOG_CONFIG,
+            # 项目特定配置
+            "SEARCH_CONFIG": boss_config.SEARCH_CONFIG,
+            "STORAGE_CONFIG": boss_config.STORAGE_CONFIG,
         }
     except ImportError as e:
         print(f"错误：配置文件格式错误！\n{str(e)}")

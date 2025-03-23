@@ -39,12 +39,9 @@ pip install -r requirements.txt
 
 ## 使用方法
 
-1. 复制配置文件示例：
-```bash
-cp config_example.py config.py
-```
+1. 修改配置文件 `config.py`，根据需要调整配置项
 
-2. 修改配置文件 `config.py`，根据需要调整配置项
+2. 修改特定项目配置文件
 
 3. 运行爬虫：
 ```bash

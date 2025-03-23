@@ -56,7 +56,6 @@ chromedriver
 chromedriver.exe
 geckodriver
 geckodriver.exe
-config.py
 *.bak
 *.tmp
 

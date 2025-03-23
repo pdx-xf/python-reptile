@@ -68,10 +68,8 @@ class BaseSpider:
 
         mobile_keywords = ["Mobile", "Android", "iPhone", "iPad", "Windows Phone"]
         if any(keyword in desktop_ua for keyword in mobile_keywords):
-            self.logger.warning(
-                "检测到移动端 User-Agent，尝试重新获取桌面端 User-Agent"
-            )
-            return desktop_ua
+            self.logger.warning("检测到移动端 User-Agent，使用默认桌面端 User-Agent")
+            return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
         return desktop_ua
 
@@ -184,7 +182,7 @@ class BaseSpider:
     def save_data(self) -> None:
         """保存数据到文件"""
         storage_config = self.config["STORAGE_CONFIG"]
-        
+
         # 确保data目录存在
         data_dir = "data"
         if not os.path.exists(data_dir):
@@ -199,9 +197,7 @@ class BaseSpider:
         try:
             with open(json_file, "w", encoding="utf-8") as f:
                 json.dump(self.data, f, ensure_ascii=False, indent=2)
-            self.logger.info(
-                f"成功保存 {len(self.data)} 条数据到 {json_file}"
-            )
+            self.logger.info(f"成功保存 {len(self.data)} 条数据到 {json_file}")
         except Exception as e:
             self.logger.error(f"保存JSON文件时出错: {str(e)}")
 
@@ -219,9 +215,7 @@ class BaseSpider:
         # 保存Excel
         if storage_config["excel_enabled"]:
             try:
-                with pd.ExcelWriter(
-                    excel_file, engine="openpyxl"
-                ) as writer:
+                with pd.ExcelWriter(excel_file, engine="openpyxl") as writer:
                     df.to_excel(writer, index=False, sheet_name="数据")
                     worksheet = writer.sheets["数据"]
                     for idx, col in enumerate(df.columns):
