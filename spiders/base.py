@@ -25,7 +25,7 @@ import requests
 
 class BaseSpider:
     """爬虫基类，提供所有爬虫共享的基础功能"""
-    
+
     def __init__(self, config: Dict[str, Any]):
         """初始化爬虫
 
@@ -68,7 +68,9 @@ class BaseSpider:
 
         mobile_keywords = ["Mobile", "Android", "iPhone", "iPad", "Windows Phone"]
         if any(keyword in desktop_ua for keyword in mobile_keywords):
-            self.logger.warning("检测到移动端 User-Agent，尝试重新获取桌面端 User-Agent")
+            self.logger.warning(
+                "检测到移动端 User-Agent，尝试重新获取桌面端 User-Agent"
+            )
             return desktop_ua
 
         return desktop_ua
@@ -90,11 +92,6 @@ class BaseSpider:
 
         chrome_options.add_argument("--disable-logging")
         chrome_options.add_argument("--log-level=3")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-gpu")
-        chrome_options.add_argument("--disable-usb-keyboard-detect")
-        chrome_options.add_argument("--disable-usb-discovery")
 
         chrome_options.add_argument(
             f"--window-size={browser_config['window_size']['width']},{browser_config['window_size']['height']}"
@@ -236,4 +233,4 @@ class BaseSpider:
 
     def run(self) -> None:
         """运行爬虫（需要在子类中实现）"""
-        raise NotImplementedError("子类必须实现run方法") 
+        raise NotImplementedError("子类必须实现run方法")
