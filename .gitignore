@@ -59,10 +59,6 @@ geckodriver.exe
 *.bak
 *.tmp
 
-# 代理配置
-proxies.txt
-proxy_config.yaml
-
 # 测试
 .coverage
 htmlcov/
