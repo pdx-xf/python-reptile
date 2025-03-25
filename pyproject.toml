@@ -2,7 +2,7 @@
 name = "python-reptile"
 version = "0.1.0"
 description = "BOSS直聘爬虫项目"
-requires-python = ">=3.9"
+requires-python = ">=3.12.9"
 
 dependencies = [
     "selenium>=4.16.0",
@@ -10,17 +10,5 @@ dependencies = [
     "pandas>=2.1.4",
     "requests>=2.31.0",
     "webdriver-manager>=4.0.1",
-    "openpyxl>=3.1.2", # 用于 Excel 文件操作
-    "uv>=0.6.9",
+    "openpyxl>=3.1.2",          # 用于 Excel 文件操作
 ]
-
-[build-system]
-requires = ["setuptools>=42"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-packages = { find = {} }
-
-[tool.rye]
-managed = true
-dev-dependencies = []
