@@ -45,6 +45,11 @@ class BaseSpider:
     def setup_logging(self) -> None:
         """配置日志"""
         log_config = self.config["LOG_CONFIG"]
+        # 确保日志目录存在
+        log_dir = os.path.dirname(log_config["file"])
+        if log_dir and not os.path.exists(log_dir):
+            os.makedirs(log_dir)
+            
         logging.basicConfig(
             level=getattr(logging, log_config["level"]),
             format=log_config["format"],
