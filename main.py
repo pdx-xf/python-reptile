@@ -5,7 +5,7 @@ import os
 import sys
 from typing import Dict, Any
 from spiders.boss import BossSpider
-
+from spiders.biquge import BiQuGeSpider
 
 def load_config() -> Dict[str, Any]:
     """加载配置文件"""
@@ -67,7 +67,8 @@ def main():
     """主函数"""
     try:
         config = load_config()
-        spider = BossSpider(config)
+        # spider = BossSpider(config)
+        spider = BiQuGeSpider(config)
         spider.run()
     except KeyboardInterrupt:
         print("\n程序被用户中断")
